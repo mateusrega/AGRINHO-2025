@@ -1,5 +1,5 @@
-const ADAFRUIT_IO_USERNAME = "SEU_USERNAME";  // Substitua pelo seu usuário Adafruit IO
-const ADAFRUIT_IO_KEY = "SUA_CHAVE_AIO";      // Substitua pela sua chave Adafruit IO
+const ADAFRUIT_IO_USERNAME = "mateus_321";  // Substitua pelo seu usuário Adafruit IO
+const ADAFRUIT_IO_KEY = "mateus_321";      // Substitua pela sua chave Adafruit IO
 const FEED_TEMPERATURA = "temperatura";       // Nome do feed de temperatura
 const FEED_UMIDADE = "umidade";                // Nome do feed de umidade
 
