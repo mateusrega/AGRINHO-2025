@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🍓CYBER GLASSHOUSE🍓</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>🌿 Monitoramento da Estufa</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header>
-    <h1>ESTUFA AGRINHO</h1>
-    <h3>Estufa interativa.</h3>
-    <strong>
-      <a id="linkagrinho" href="https://www.sistemafaep.org.br/wp-content/uploads/2024/04/9.-Rede-Publica-de-Ensino-Categoria-Programacao.pdf" target="_blank">
-        link das normas
-      </a>
-    </strong>
+    <h1>🌿 Monitoramento da Estufa</h1>
+    <h3>Histórico de temperatura e umidade</h3>
   </header>
-<div id="infos">
-  <!-- Formulário que envia para recebedados.php -->
-  <form id="formulario" action="recebedados.php" method="POST">
-    <label for="temperatura">Temperatura (°C):</label>
-    <input type="text" id="temperatura" name="temperatura" placeholder="Ex: 25.5" required>
 
-    <label for="umidade">Umidade (%):</label>
-    <input type="text" id="umidade" name="umidade" placeholder="Ex: 60" required>
+  <div class="dados-box">
+    <h2>📋 Leituras:</h2>
+    <pre id="dados">Carregando dados...</pre>
+    <p class="atualizando">⏳ Atualizando automaticamente a cada 5 segundos...</p>
+    <p><a href="index.html">← Voltar para enviar novos dados</a></p>
+  </div>
 
-    <button type="submit">Enviar dados</button>
-  </form>
-</div>
+  <script src="script.js"></script>
 </body>
 </html>
