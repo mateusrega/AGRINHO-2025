@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🍓CYBER GLASSHOUSE🍓</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="/public/manifest.json">
   <meta name="theme-color" content="#d94bb5">
 </head>
 <body>
@@ -21,24 +21,14 @@
     <p><strong>Umidade:</strong> <span id="valor-umid">--</span> %</p>
   </div>
 
-  <script>
-    // Registro do Service Worker para ativar PWA
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log("✅ Service Worker registrado"))
-        .catch(err => console.error("Erro ao registrar SW:", err));
-    }
+ <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/public/service-worker.js') // ← se o service worker estiver na pasta public
+      .then(() => console.log("✅ Service Worker registrado"))
+      .catch(err => console.error("Erro ao registrar SW:", err));
+  }
+</script>
 
-    // Simulador de dados (pode ser trocado por fetch para API da Adafruit IO)
-    function simularDados() {
-      const temperatura = (20 + Math.random() * 10).toFixed(1);
-      const umidade = (40 + Math.random() * 30).toFixed(1);
-      document.getElementById('valor-temp').textContent = temperatura;
-      document.getElementById('valor-umid').textContent = umidade;
-    }
-    setInterval(simularDados, 5000);
-    simularDados();
-  </script>
   <script src="script.js"></script>
 </body>
 </html>
