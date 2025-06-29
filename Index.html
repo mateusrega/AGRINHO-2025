@@ -12,15 +12,11 @@
   <header>
     <h1>ESTUFA AGRINHO</h1>
     <h3>Estufa interativa.</h3>
-    <strong>
-      <a id="linkagrinho" href="https://www.senar-es.org.br/data/filemanager/uploads/regulamento_agrinho_2025.pdf" target="_blank">
-        link das normas
-      </a>
-    </strong>
   </header>
 
   <!-- Visualização de dados ao vivo -->
   <div id="dados-estufa">
+    <pre id="dados">Carregando dados...</pre>
     <p><strong>Temperatura:</strong> <span id="valor-temp">--</span> °C</p>
     <p><strong>Umidade:</strong> <span id="valor-umid">--</span> %</p>
   </div>
@@ -43,5 +39,6 @@
     setInterval(simularDados, 5000);
     simularDados();
   </script>
+  <script src="script.js"></script>
 </body>
 </html>
