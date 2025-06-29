@@ -1,7 +1,7 @@
 const ADAFRUIT_IO_USERNAME = "mateus_321";  // Substitua pelo seu usuário Adafruit IO
-const ADAFRUIT_IO_KEY = "mateus_321";      // Substitua pela sua chave Adafruit IO
-const FEED_TEMPERATURA = "temperatura";       // Nome do feed de temperatura
-const FEED_UMIDADE = "umidade";                // Nome do feed de umidade
+const ADAFRUIT_IO_KEY = "mateus_321";       // Substitua pela sua chave Adafruit IO
+const FEED_TEMPERATURA = "temperatura";     // Nome do feed de temperatura
+const FEED_UMIDADE = "umidade";             // Nome do feed de umidade
 
 async function buscarDados() {
   try {
@@ -21,13 +21,22 @@ async function buscarDados() {
     const dadosUmid = await respUmid.json();
 
     let texto = "";
-    for(let i = 0; i < dadosTemp.length; i++) {
+    for (let i = 0; i < dadosTemp.length; i++) {
       const temp = dadosTemp[i];
       const umid = dadosUmid[i];
       texto += `${new Date(temp.created_at).toLocaleString()} - Temp: ${temp.value} °C, Umid: ${umid.value} %\n`;
     }
 
     document.getElementById("dados").textContent = texto || "Nenhum dado disponível ainda.";
+
+    // Atualiza o HUD com os dados mais recentes
+    if (dadosTemp.length > 0) {
+      document.getElementById("valor-temp").textContent = dadosTemp[0].value;
+    }
+    if (dadosUmid.length > 0) {
+      document.getElementById("valor-umid").textContent = dadosUmid[0].value;
+    }
+
   } catch (error) {
     document.getElementById("dados").textContent = "Erro ao buscar dados: " + error;
   }
