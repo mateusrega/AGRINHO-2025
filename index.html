@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🍓CYBER GLASSHOUSE🍓</title>
+  <meta name="theme-color" content="#d94bb5">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🍓 CYBER GLASSHOUSE 🍓</h1>
+      <h3>Estufa inteligente Agrinho - Monitoramento em tempo real</h3>
+      <strong>
+        <a id="linkagrinho" href="https://www.senar-es.org.br/data/filemanager/uploads/regulamento_agrinho_2025.pdf" target="_blank">
+          <i class="fas fa-book"></i> Regulamento Agrinho
+        </a>
+      </strong>
+    </header>
+
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <div class="data-card">
+        <h2><i class="fas fa-temperature-high"></i> Temperatura</h2>
+        <div class="value-container">
+          <span class="value" id="valor-temp">--</span>
+          <span class="unit">°C</span>
+        </div>
+        <span class="status" id="status-temp">Carregando...</span>
+      </div>
+      
+      <div class="data-card">
+        <h2><i class="fas fa-tint"></i> Umidade do Ar</h2>
+        <div class="value-container">
+          <span class="value" id="valor-umid">--</span>
+          <span class="unit">%</span>
+        </div>
+        <span class="status" id="status-umid">Carregando...</span>
+      </div>
+      
+      <div class="data-card">
+        <h2><i class="fas fa-seedling"></i> Umidade do Solo</h2>
+        <div class="value-container">
+          <span class="value" id="valor-solo">--</span>
+          <span class="unit">%</span>
+        </div>
+        <span class="status" id="status-solo">Carregando...</span>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <div class="control-card">
+        <h2><i class="fas fa-fan"></i> Controle de Ventilação</h2>
+        <div class="switch-container">
+          <span>Ventilação Automática</span>
+          <label class="switch">
+            <input type="checkbox" id="ventilacao-auto" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-container">
+          <span>Ventilador Forçado</span>
+          <label class="switch">
+            <input type="checkbox" id="ventilacao-forcada">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="control-card">
+        <h2><i class="fas fa-water"></i> Controle de Irrigação</h2>
+        <div class="switch-container">
+          <span>Irrigação Automática</span>
+          <label class="switch">
+            <input type="checkbox" id="irrigacao-auto" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-container">
+          <span>Irrigação Manual</span>
+          <label class="switch">
+            <input type="checkbox" id="irrigacao-manual">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="control-card">
+        <h2><i class="fas fa-lightbulb"></i> Iluminação</h2>
+        <div class="switch-container">
+          <span>Luzes Automáticas</span>
+          <label class="switch">
+            <input type="checkbox" id="luz-auto" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="switch-container">
+          <span>Luzes Forçadas</span>
+          <label class="switch">
+            <input type="checkbox" id="luz-forcada">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts">
+      <div class="chart-container">
+        <h2><i class="fas fa-chart-line"></i> Histórico de Temperatura</h2>
+        <canvas id="tempChart"></canvas>
+      </div>
+      
+      <div class="chart-container">
+        <h2><i class="fas fa-chart-area"></i> Histórico de Umidade</h2>
+        <canvas id="umidChart"></canvas>
+      </div>
+    </div>
+
+    <footer>
+      <p>Projeto Agrinho 2025 - Estufa Inteligente Cyber Glasshouse</p>
+      <p>Desenvolvido com <i class="fas fa-heart" style="color: var(--primary);"></i> para o futuro da agricultura</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
