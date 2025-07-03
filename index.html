@@ -100,7 +100,24 @@
       <p>Desenvolvido com <i class="fas fa-heart" style="color: var(--primary);"></i> para o futuro da agricultura</p>
     </footer>
   </div>
+<!-- Adicione isso dentro do <body> -->
+<button id="ajuda-btn" title="Como funciona?">
+  <i class="fas fa-question-circle"></i>
+</button>
 
+<div id="modal-ajuda" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h2>Como funciona?</h2>
+    <p>Este aplicativo PWA está conectado a um Arduino Uno com módulo WiFi (ESP8266). Os sensores medem temperatura e umidade, e os dados são enviados ao Adafruit IO. Você pode visualizar os dados em tempo real, controlar luzes e irrigação automática ou manual. É responsivo, funciona offline e pode ser instalado no celular.</p>
+  </div>
+</div>
+
+<section class="sobre">
+  <h2><i class="fas fa-user-graduate"></i> Sobre o Projeto</h2>
+  <p>Este projeto foi desenvolvido por <strong>Mateus</strong>, aluno da <strong>Escola Maria Luiza Franco Pacheco</strong>, em <strong>Balsa Nova - PR</strong>, sob orientação do professor <strong>Arthur</strong>.</p>
+  <p>Categoria: <strong>Programação</strong> – Concurso Agrinho 2025.</p>
+</section>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="scripts.js"></script>
 </body>
