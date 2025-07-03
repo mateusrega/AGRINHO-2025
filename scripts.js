@@ -1,8 +1,4 @@
-// script.js completo com Adafruit IO + Chart.js
-
-const AIO_USER = "mateus_333";
-const AIO_KEY = "aio_vDUA592m0UzKSfJUUYcUl8oYtMt3";
-const HEADERS = { "X-AIO-Key": AIO_KEY };
+const WORKER_BASE_URL = "/api/adafruit";
 
 const FEEDS = {
   temp: "temperatura",
@@ -13,7 +9,7 @@ const FEEDS = {
   luzForcada: "luz-forcada"
 };
 
-// Service Worker
+// Service Worker (se tiver)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('service-worker.js')
@@ -22,10 +18,10 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-// =================== Gráficos ====================
+// Gráficos (exemplo com Chart.js)
 const labels = ["21h", "22h", "23h", "00h", "01h", "02h", "03h", "04h", "05h", "06h", "07h", "08h", "09h", "10h", "11h", "12h", "13h", "14h", "15h", "16h", "17h", "18h", "19h", "20h"];
-const tempData = [25.7, 23.3, 34.3, 22.3, 25.7, 30.2, 29.9, 32.9, 31.5, 33.4, 25.3, 33.4, 27.8, 23.6, 26.6, 23.6, 26.9, 33.8, 33.0, 22.2, 33.0, 23.9, 34.4, 35.0];
-const umidData = [65.7, 64.8, 64.6, 64.7, 74.8, 54.7, 72.3, 71.5, 45.9, 60.0, 46.4, 52.3, 56.0, 52.2, 61.1, 57.5, 63.3, 64.7, 59.2, 46.1, 47.5, 56.3, 46.7, 50.6];
+const tempData = Array(24).fill(null);
+const umidData = Array(24).fill(null);
 
 const tempChart = new Chart(document.getElementById("tempChart").getContext("2d"), {
   type: "line",
@@ -69,40 +65,41 @@ const umidChart = new Chart(document.getElementById("umidChart").getContext("2d"
   }
 });
 
-// ============ Atualizar Dashboard com dados reais ============
-async function atualizarDados() {
+// Função para buscar feed via proxy
+async function fetchFeed(feed) {
   try {
-    const [respTemp, respUmid] = await Promise.all([
-      fetch(`https://io.adafruit.com/api/v2/${AIO_USER}/feeds/${FEEDS.temp}/data?limit=1`, { headers: HEADERS }),
-      fetch(`https://io.adafruit.com/api/v2/${AIO_USER}/feeds/${FEEDS.umid}/data?limit=1`, { headers: HEADERS })
-    ]);
-
-    const temp = await respTemp.json();
-    const umid = await respUmid.json();
-
-    const valorTemp = parseFloat(temp[0].value);
-    const valorUmid = parseFloat(umid[0].value);
-
-    document.getElementById("valor-temp").textContent = valorTemp;
-    document.getElementById("valor-umid").textContent = valorUmid;
-
-    atualizarStatus("temp", valorTemp, 25, 35);
-    atualizarStatus("umid", valorUmid, 50, 70);
-
-    const hora = new Date().getHours() + "h";
-    labels.push(hora);
-    tempChart.data.labels = labels.slice(-24);
-    umidChart.data.labels = labels.slice(-24);
-    tempChart.data.datasets[0].data.push(valorTemp);
-    umidChart.data.datasets[0].data.push(valorUmid);
-    tempChart.data.datasets[0].data = tempChart.data.datasets[0].data.slice(-24);
-    umidChart.data.datasets[0].data = umidChart.data.datasets[0].data.slice(-24);
-    tempChart.update();
-    umidChart.update();
-
+    const res = await fetch(`${WORKER_BASE_URL}?feed=${feed}`);
+    if (!res.ok) throw new Error("Erro na requisição");
+    const data = await res.json();
+    return data.value;
   } catch (err) {
-    console.error("Erro ao buscar dados do Adafruit IO:", err);
+    console.error("Erro ao buscar feed:", err);
+    return null;
   }
+}
+
+async function atualizarDados() {
+  const valorTemp = await fetchFeed("temperatura");
+  const valorUmid = await fetchFeed("umidade");
+
+  if (valorTemp !== null) {
+    document.getElementById("valor-temp").textContent = valorTemp;
+    atualizarStatus("temp", parseFloat(valorTemp), 25, 35);
+
+    tempChart.data.datasets[0].data.push(parseFloat(valorTemp));
+    tempChart.data.datasets[0].data.shift();
+  }
+
+  if (valorUmid !== null) {
+    document.getElementById("valor-umid").textContent = valorUmid;
+    atualizarStatus("umid", parseFloat(valorUmid), 50, 70);
+
+    umidChart.data.datasets[0].data.push(parseFloat(valorUmid));
+    umidChart.data.datasets[0].data.shift();
+  }
+
+  tempChart.update();
+  umidChart.update();
 }
 
 function atualizarStatus(tipo, valor, min, max) {
@@ -125,17 +122,17 @@ function atualizarStatus(tipo, valor, min, max) {
 setInterval(atualizarDados, 5000);
 atualizarDados();
 
-// ============ Controles interativos com Adafruit ============
+// Controles interativos, exemplo de envio de comando
 function enviarComando(feed, valor) {
-  fetch(`https://io.adafruit.com/api/v2/${AIO_USER}/feeds/${feed}/data`, {
+  fetch(`${WORKER_BASE_URL}?feed=${feed}`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
-      "X-AIO-Key": AIO_KEY
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({ value })
-  }).then(() => console.log(`Comando enviado: ${feed} = ${valor}`))
-    .catch(err => console.error("Erro ao enviar comando:", err));
+    body: JSON.stringify({ value: valor })
+  })
+  .then(() => console.log(`Comando enviado: ${feed} = ${valor}`))
+  .catch(err => console.error("Erro ao enviar comando:", err));
 }
 
 document.querySelectorAll('.switch input').forEach(input => {
