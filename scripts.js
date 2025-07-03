@@ -142,3 +142,20 @@ document.querySelectorAll('.switch input').forEach(input => {
     enviarComando(feed, valor);
   });
 });
+const ajudaBtn = document.getElementById('ajuda-btn');
+const modalAjuda = document.getElementById('modal-ajuda');
+const closeAjuda = document.querySelector('.modal .close');
+
+ajudaBtn.addEventListener('click', () => {
+  modalAjuda.style.display = 'block';
+});
+
+closeAjuda.addEventListener('click', () => {
+  modalAjuda.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+  if (event.target == modalAjuda) {
+    modalAjuda.style.display = 'none';
+  }
+});
