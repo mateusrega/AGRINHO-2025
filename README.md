@@ -38,7 +38,7 @@ Essa arquitetura garante que as chaves privadas não vazem e mantém a comunica�
 
 ## 📲 Como acessar
 
-- Acesse: [🔗 Link do projeto](https://SEU_LINK_AQUI.vercel.app)  
+- Acesse: [🔗 Link do projeto](https://agrinho-2025-seven-hazel.vercel.app/)  
 - Instale como aplicativo (PWA) no celular ou desktop  
 - Veja os dados em tempo real ou em simulação
 
